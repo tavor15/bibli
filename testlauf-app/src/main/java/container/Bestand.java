@@ -1,6 +1,8 @@
-package com.teamgg.app;
+package container;
 
 import java.util.Enumeration;
+
+import medien.Medium;
 
 public class Bestand extends Container<Bereich>{
 

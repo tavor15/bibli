@@ -1,4 +1,6 @@
-package com.teamgg.app;
+package container;
+
+import medien.Medium;
 
 public class Regal extends Container<Medium>{
 
