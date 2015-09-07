@@ -7,15 +7,16 @@ import medien.Medium;
 public class Bestand extends Container<Bereich>{
 
 	
-	public Bestand(){
-		super();
-		
+	public Bestand(String name){
+		super(name);
 	}
 
+	
+	@Override
 	/**
 	 * Suche nach Bereich in Bestand mit key
+	 * @param key
 	 */
-	@Override
 	public Bereich search(int key) {
 		if(getInhalt().containsKey(key)){
 			return getInhalt().get(key);
@@ -26,7 +27,7 @@ public class Bestand extends Container<Bereich>{
 	/**
 	 * Suche nach Regal ueber Bestand mit key
 	 * @param key
-	 * @return
+	 * @return Regal
 	 */
 	public Regal searchRegal(int key){
 		Regal ret;
@@ -42,7 +43,7 @@ public class Bestand extends Container<Bereich>{
 	/**
 	 * Suche nach Medium ueber Bestand mit key
 	 * @param key
-	 * @return
+	 * @return Medium
 	 */
 	public Medium searchMedium(int key){
 		Bereich ber;

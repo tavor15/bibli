@@ -5,9 +5,11 @@ import java.util.Hashtable;
 public abstract class Container<T>{
 
 	private Hashtable<Integer,T> inhalt;	// Inhaltstabelle, traegt Inhalte
+	private String name;
 	
-	public Container(){
+	public Container(String name){
 		setInhalt(new Hashtable<Integer,T>());
+		setName(name);
 	};
 	
 	/**
@@ -16,7 +18,7 @@ public abstract class Container<T>{
 	 * @return
 	 */
 	public boolean add(T obj){
-		if(inhalt.contains(obj)) return false;
+		if(inhalt.containsKey(obj.hashCode())) return false;
 		else inhalt.put(obj.hashCode(), obj);
 		return true;
 	}
@@ -27,6 +29,7 @@ public abstract class Container<T>{
 	 * @return
 	 */
 	public boolean edit(T obj){
+		// loesche alte eintraege bei titel oder verlags-aenderung
 		if((inhalt.put(obj.hashCode(), obj)) != null) return true;
 		else return false;
 	}
@@ -68,6 +71,14 @@ public abstract class Container<T>{
 
 	public void setInhalt(Hashtable<Integer, T> inhalt) {
 		this.inhalt = inhalt;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 }

@@ -1,6 +1,9 @@
 package medien;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Buch extends Medium{
 	
@@ -15,22 +18,43 @@ public class Buch extends Medium{
 	private int seiten;
 	private Medium prequel;
 	private Medium sequel;
+	private String bindung;
+	private int auflage;
+	private long ersterscheinung;
+	private String anmerkungen;
+	private String isbn;
+	private String Sprache;
 	
-	public Buch(String titel, String verlag, ArrayList<String> autoren, int seiten, Medium prequel, Medium sequel) {
-		super(titel, verlag);
+	public Buch(String titel, String verlag, boolean imBesitz, ArrayList<String> autoren, int seiten, Medium prequel, Medium sequel,
+			    String bindung, int auflage, long ersterscheinung, String anmerkungen, String isbn, String sprache) {
+		super(titel, verlag, imBesitz);
 		this.setAutoren(autoren);
 		this.setPrequel(prequel);
 		this.setSeiten(seiten);
 		this.setSequel(sequel);
+		this.setBindung(bindung);
+		this.setAuflage(auflage);
+		this.setErsterscheinung(ersterscheinung);
+		this.setAnmerkungen(anmerkungen);
+		this.setIsbn(isbn);
+		this.setSprache(sprache);
 	}
 	
 	@Override
 	public String toString(){
+		DateFormat df = new SimpleDateFormat("dd.mm.yyyy");
+		String datum = df.format(new Date(getErsterscheinung()));
 		return (super.toString() +
 				"\nAutoren: " + getAutoren() +
 				"\nSeiten: " + getSeiten() +
 				"\nPrequel: " + getPrequel() +
-				"\nSequel: " + getSequel());
+				"\nSequel: " + getSequel() +
+				"\nBindung: " + getBindung() +
+				"\nAuflage: " + getAuflage() +
+				"\nErsterscheinung: " + datum +
+				"\nSprache: " + getSprache() +
+				"\nISBN: " + getIsbn() +
+				"\nAnmerkungen: " + getAnmerkungen());
 	}
 
 	public ArrayList<String> getAutoren() {
@@ -63,6 +87,54 @@ public class Buch extends Medium{
 
 	public void setSequel(Medium sequel) {
 		this.sequel = sequel;
+	}
+
+	public String getBindung() {
+		return bindung;
+	}
+
+	public void setBindung(String bindung) {
+		this.bindung = bindung;
+	}
+
+	public int getAuflage() {
+		return auflage;
+	}
+
+	public void setAuflage(int auflage) {
+		this.auflage = auflage;
+	}
+
+	public long getErsterscheinung() {
+		return ersterscheinung;
+	}
+
+	public void setErsterscheinung(long ersterscheinung) {
+		this.ersterscheinung = ersterscheinung;
+	}
+
+	public String getAnmerkungen() {
+		return anmerkungen;
+	}
+
+	public void setAnmerkungen(String anmerkungen) {
+		this.anmerkungen = anmerkungen;
+	}
+
+	public String getIsbn() {
+		return isbn;
+	}
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+
+	public String getSprache() {
+		return Sprache;
+	}
+
+	public void setSprache(String sprache) {
+		Sprache = sprache;
 	}
 
 }
