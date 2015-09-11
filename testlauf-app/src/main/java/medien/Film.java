@@ -11,8 +11,8 @@ public class Film extends Medium{
 	 * private String verlag;
 	 */
 
-	private String autor;
-	private String regisseur;
+	private ArrayList<String> autoren;
+	private ArrayList<String> regisseure;
 	private String vorlage; //erweiterung als medium
 	private Medium prequel;
 	private Medium sequel;
@@ -25,20 +25,20 @@ public class Film extends Medium{
 	
 	public Film(String titel, String verlag, boolean imBesitz) {
 		super(titel, verlag, imBesitz);
-		this.setAutor("unbekannt");
+		this.setAutoren(new ArrayList<String>());
 		this.setPrequel(null);
-		this.setRegisseur("unbekannt");
+		this.setRegisseure(new ArrayList<String>());
 		this.setSequel(null);
 		this.setTitel("unbekannt");
 		this.setVorlage(null);
 	}
 	
-	public Film(String titel, String verlag, boolean imBesitz, String autor, String regisseur, 
+	public Film(String titel, String verlag, boolean imBesitz, ArrayList<String> autoren, ArrayList<String> regisseure, 
 			String vorlage, Medium prequel, Medium sequel) {
 		super(titel, verlag, imBesitz);
-		this.setAutor(autor);
+		this.setAutoren(autoren);
 		this.setPrequel(prequel);
-		this.setRegisseur(regisseur);
+		this.setRegisseure(new ArrayList<String>());
 		this.setSequel(sequel);
 		this.setTitel(titel);
 		this.setVorlage(vorlage);
@@ -47,27 +47,11 @@ public class Film extends Medium{
 	@Override
 	public String toString(){
 		return (super.toString() +
-				"\nAutor: " + getAutor() +
-				"\nRegisseur: " + getRegisseur() +
+				"\nAutoren: " + getAutoren() +
+				"\nRegisseure: " + getRegisseure() +
 				"\nVorlage: " + getVorlage() +
 				"\nPrequel: " + getPrequel() +
 				"\nSequel: " + getSequel());
-	}
-
-	public String getAutor() {
-		return autor;
-	}
-
-	public void setAutor(String autor) {
-		this.autor = autor;
-	}
-
-	public String getRegisseur() {
-		return regisseur;
-	}
-
-	public void setRegisseur(String regisseur) {
-		this.regisseur = regisseur;
 	}
 
 	public String getVorlage() {
@@ -140,6 +124,22 @@ public class Film extends Medium{
 
 	public void setAnmerkungen(String anmerkungen) {
 		this.anmerkungen = anmerkungen;
+	}
+
+	public ArrayList<String> getAutoren() {
+		return autoren;
+	}
+
+	public void setAutoren(ArrayList<String> autoren) {
+		this.autoren = autoren;
+	}
+
+	public ArrayList<String> getRegisseure() {
+		return regisseure;
+	}
+
+	public void setRegisseure(ArrayList<String> regisseure) {
+		this.regisseure = regisseure;
 	}
 
 }

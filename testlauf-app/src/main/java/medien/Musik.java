@@ -1,5 +1,7 @@
 package medien;
 
+import java.util.ArrayList;
+
 public class Musik extends Medium{
 
 	/*
@@ -9,8 +11,8 @@ public class Musik extends Medium{
 	 * private String verlag;
 	 */	
 	
-	private String autor;
-	private String interpret;
+	private ArrayList<String> autoren;
+	private ArrayList<String> interpreten;
 	private int dauerInSek;
 	private String erscheinungsland;
 	private int spuren;
@@ -20,42 +22,27 @@ public class Musik extends Medium{
 	
 	public Musik(String titel, String verlag, boolean imBesitz) {
 		super(titel, verlag, imBesitz);
-		this.setAutor("unbekannt");
-		this.setInterpret("unbekannt");
+		this.setAutoren(new ArrayList<String>());
+		this.setInterpreten(new ArrayList<String>());
 		this.setDauerInSek(-1);
 	}
 	
-	public Musik(String titel, String verlag, boolean imBesitz, String autor, String interpret, int dauerInSek){
+	public Musik(String titel, String verlag, boolean imBesitz, ArrayList<String> autor, ArrayList<String> interpret, int dauerInSek){
 		super(titel, verlag, imBesitz);
-		this.setAutor(autor);
+		this.setAutoren(autoren);
 		this.setVerlag(verlag);
-		this.setInterpret(interpret);
+		this.setInterpreten(interpreten);
 		this.setDauerInSek(dauerInSek);
 	}
 	
 	@Override
 	public String toString(){
 		return (super.toString() +
-				"\nAutor: " + getAutor() +
-				"\nInterpret: " + getInterpret() +
+				"\nAutoren: " + getAutoren() +
+				"\nInterpreten: " + getInterpreten() +
 				"\nDauer in Sekunden: " + getDauerInSek());
 	}
 
-	public String getAutor() {
-		return autor;
-	}
-
-	public void setAutor(String autor) {
-		this.autor = autor;
-	}
-
-	public String getInterpret() {
-		return interpret;
-	}
-
-	public void setInterpret(String interpret) {
-		this.interpret = interpret;
-	}
 
 	public int getDauerInSek() {
 		return dauerInSek;
@@ -103,6 +90,22 @@ public class Musik extends Medium{
 
 	public void setAnmerkungen(String anmerkungen) {
 		this.anmerkungen = anmerkungen;
+	}
+
+	public ArrayList<String> getInterpreten() {
+		return interpreten;
+	}
+
+	public void setInterpreten(ArrayList<String> interpreten) {
+		this.interpreten = interpreten;
+	}
+
+	public ArrayList<String> getAutoren() {
+		return autoren;
+	}
+
+	public void setAutoren(ArrayList<String> autoren) {
+		this.autoren = autoren;
 	}
 
 }

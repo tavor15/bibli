@@ -18,7 +18,7 @@ public class Medium {
 	 * @param titel
 	 * @param verlag
 	 */
-	protected Medium(String titel, String verlag, boolean imBesitz){
+	public Medium(String titel, String verlag, boolean imBesitz){
 		setTitel(titel);
 		setVerlag(verlag);
 		setImBesitz(imBesitz);

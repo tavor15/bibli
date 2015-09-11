@@ -15,18 +15,18 @@ public class Buch extends Medium{
 	 */
 	
 	private ArrayList<String> autoren;
-	private int seiten;
+	private String seiten;
 	private Medium prequel;
 	private Medium sequel;
 	private String bindung;
-	private int auflage;
+	private String auflage;
 	private long ersterscheinung;
 	private String anmerkungen;
 	private String isbn;
 	private String Sprache;
 	
-	public Buch(String titel, String verlag, boolean imBesitz, ArrayList<String> autoren, int seiten, Medium prequel, Medium sequel,
-			    String bindung, int auflage, long ersterscheinung, String anmerkungen, String isbn, String sprache) {
+	public Buch(String titel, String verlag, boolean imBesitz, ArrayList<String> autoren, String seiten, Medium prequel, Medium sequel,
+			    String bindung, String auflage, long ersterscheinung, String anmerkungen, String isbn, String sprache) {
 		super(titel, verlag, imBesitz);
 		this.setAutoren(autoren);
 		this.setPrequel(prequel);
@@ -47,8 +47,8 @@ public class Buch extends Medium{
 		return (super.toString() +
 				"\nAutoren: " + getAutoren() +
 				"\nSeiten: " + getSeiten() +
-				"\nPrequel: " + getPrequel() +
-				"\nSequel: " + getSequel() +
+				"\nPrequel: " + getPrequel().getTitel() + "ID: " + getPrequel().getId() +
+				"\nSequel: " + getSequel().getTitel() + "ID: " + getSequel().getId() +
 				"\nBindung: " + getBindung() +
 				"\nAuflage: " + getAuflage() +
 				"\nErsterscheinung: " + datum +
@@ -65,11 +65,11 @@ public class Buch extends Medium{
 		this.autoren = autoren;
 	}
 
-	public int getSeiten() {
+	public String getSeiten() {
 		return seiten;
 	}
 
-	public void setSeiten(int seiten) {
+	public void setSeiten(String seiten) {
 		this.seiten = seiten;
 	}
 
@@ -97,11 +97,11 @@ public class Buch extends Medium{
 		this.bindung = bindung;
 	}
 
-	public int getAuflage() {
+	public String getAuflage() {
 		return auflage;
 	}
 
-	public void setAuflage(int auflage) {
+	public void setAuflage(String auflage) {
 		this.auflage = auflage;
 	}
 
