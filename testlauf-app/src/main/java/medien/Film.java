@@ -38,9 +38,8 @@ public class Film extends Medium{
 		super(titel, verlag, imBesitz);
 		this.setAutoren(autoren);
 		this.setPrequel(prequel);
-		this.setRegisseure(new ArrayList<String>());
+		this.setRegisseure(regisseure);
 		this.setSequel(sequel);
-		this.setTitel(titel);
 		this.setVorlage(vorlage);
 	}
 	

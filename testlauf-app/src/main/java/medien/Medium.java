@@ -19,8 +19,8 @@ public class Medium {
 	 * @param verlag
 	 */
 	public Medium(String titel, String verlag, boolean imBesitz){
-		setTitel(titel);
-		setVerlag(verlag);
+		setTitel(titel.replace(' ', '_').toLowerCase());
+		setVerlag(verlag.replace(' ', '_').toLowerCase());
 		setImBesitz(imBesitz);
 		this.id = this.hashCode();
 	}

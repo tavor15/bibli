@@ -19,6 +19,10 @@ public class Regal extends Container<Medium> implements Suche{
 	}
 	
 	@Override
+	/**
+	 * Fuegt dem Regal ein neues Medium hinzu und loest die Funktion add(Medium) im Suchsystem aus, 
+	 * wodurch die ID des Mediums in die entsprechenden Eigenschafts- und Wert-Listen eingetragen weird.
+	 */
 	public boolean add(Medium m){
 		super.add(m);
 		getSuche().add(m);
@@ -34,6 +38,17 @@ public class Regal extends Container<Medium> implements Suche{
 		}
 		return null;
 	}
+	
+	public HashSet<Medium> keysToMedia(HashSet<Integer> set) {
+		HashSet<Medium> erg = new HashSet<Medium>();
+		Iterator<Integer> it = set.iterator();
+		int temp;
+		while(it.hasNext()){
+			temp = it.next();
+			erg.add(this.suche(temp));
+		}
+		return erg;
+	}
 
 	public String getPfad() {
 		return pfad;
@@ -42,6 +57,8 @@ public class Regal extends Container<Medium> implements Suche{
 	public void setPfad(String pfad) {
 		this.pfad = pfad;
 	}
+
+	
 
 
 

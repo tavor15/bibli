@@ -30,7 +30,6 @@ public class Musik extends Medium{
 	public Musik(String titel, String verlag, boolean imBesitz, ArrayList<String> autor, ArrayList<String> interpret, int dauerInSek){
 		super(titel, verlag, imBesitz);
 		this.setAutoren(autoren);
-		this.setVerlag(verlag);
 		this.setInterpreten(interpreten);
 		this.setDauerInSek(dauerInSek);
 	}

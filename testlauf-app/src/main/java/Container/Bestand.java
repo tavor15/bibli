@@ -31,6 +31,17 @@ public class Bestand extends Container<Bereich> implements Suche{
 		}
 		return null;
 	}
+
+	public HashSet<Medium> keysToMedia(HashSet<Integer> set) {
+		HashSet<Medium> erg = new HashSet<Medium>();
+		Iterator<Integer> it = set.iterator();
+		int temp;
+		while(it.hasNext()){
+			temp = it.next();
+			erg.add(this.suche(temp));
+		}
+		return erg;
+	}
 	
 	
 

@@ -32,12 +32,12 @@ public class Buch extends Medium{
 		this.setPrequel(prequel);
 		this.setSeiten(seiten);
 		this.setSequel(sequel);
-		this.setBindung(bindung);
+		this.setBindung(bindung.replace(' ', '_').toLowerCase());
 		this.setAuflage(auflage);
 		this.setErsterscheinung(ersterscheinung);
 		this.setAnmerkungen(anmerkungen);
 		this.setIsbn(isbn);
-		this.setSprache(sprache);
+		this.setSprache(sprache.replace(' ', '_').toLowerCase());
 	}
 	
 	@Override
@@ -47,8 +47,8 @@ public class Buch extends Medium{
 		return (super.toString() +
 				"\nAutoren: " + getAutoren() +
 				"\nSeiten: " + getSeiten() +
-				"\nPrequel: " + getPrequel().getTitel() + "ID: " + getPrequel().getId() +
-				"\nSequel: " + getSequel().getTitel() + "ID: " + getSequel().getId() +
+				"\nPrequel: " + getPrequel() +
+				"\nSequel: " + getSequel() +
 				"\nBindung: " + getBindung() +
 				"\nAuflage: " + getAuflage() +
 				"\nErsterscheinung: " + datum +
