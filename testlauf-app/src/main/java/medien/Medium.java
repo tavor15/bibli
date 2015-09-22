@@ -1,12 +1,18 @@
 package medien;
 
+import java.io.Serializable;
+
 /**
  * Superklasse fuer alle Medien mit grundlegenden Eigenschaften
  * @author nachlicht
  *
  */
-public class Medium {
+public class Medium implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 10L;
 	private final int id;
 	private String[] titelUndVerlag = new String[2];
 	private boolean imBesitz;

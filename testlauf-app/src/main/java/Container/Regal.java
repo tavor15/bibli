@@ -9,6 +9,8 @@ import medien.Medium;
 
 public class Regal extends Container<Medium> implements Suche{
 	
+
+	private static final long serialVersionUID = 21L;
 	private String pfad;
 
 	public Regal(Bereich bereich, String name) {

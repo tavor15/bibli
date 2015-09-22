@@ -1,13 +1,15 @@
 package Container;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 
 import com.teamgg.app.Suchsystem;
 
-public abstract class Container<T> {
+public abstract class Container<T> implements Serializable{
 
+	private static final long serialVersionUID = 20L;
 	private HashSet<T> inhalt;
 	private String name;
 	private Suchsystem suche;

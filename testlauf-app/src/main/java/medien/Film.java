@@ -11,6 +11,10 @@ public class Film extends Medium{
 	 * private String verlag;
 	 */
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 13L;
 	private ArrayList<String> autoren;
 	private ArrayList<String> regisseure;
 	private String vorlage; //erweiterung als medium

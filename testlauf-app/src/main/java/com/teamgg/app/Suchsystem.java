@@ -1,5 +1,14 @@
 package com.teamgg.app;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,8 +21,12 @@ import medien.Film;
 import medien.Medium;
 import medien.Musik;
 
-public class Suchsystem {
+public class Suchsystem implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 30L;
 	private HashMap<String,HashMap<String,HashSet<Integer>>> index;
 	// Eigenschaft - Wert - Liste der betreffenden Medien (als Hash-Werte)
 	
@@ -23,6 +36,41 @@ public class Suchsystem {
 		index = new HashMap<String,HashMap<String,HashSet<Integer>>>();
 	}
 	
+	//bei Persistierung mit XML seperat speichern (nur index-Array speichern?)
+	/*public static void safe(Suchsystem s){
+		try {
+			BufferedOutputStream buffered = new BufferedOutputStream(new FileOutputStream("index.safe"));
+			ObjectOutputStream out = new ObjectOutputStream(buffered);
+			out.writeObject(s);
+			out.flush();
+			out.close();
+			buffered.flush();
+			buffered.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static Suchsystem load(){
+		Suchsystem s = null;
+		try {
+			BufferedInputStream buffered = new BufferedInputStream(new FileInputStream("index.safe"));
+			ObjectInputStream in = new ObjectInputStream(buffered);
+			s = (Suchsystem) in.readObject();
+			in.close();
+			buffered.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return s;
+	}*/
 	
 	/**
 	 * Editiert einen vorhandenen Eintrag an der Stelle "eigenschaft" mit "wert" 

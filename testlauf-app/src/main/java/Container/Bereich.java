@@ -9,6 +9,7 @@ import medien.Medium;
 
 public class Bereich extends Container<Regal> implements Suche{
 	
+	private static final long serialVersionUID = 22L;
 	private String pfad;
 
 	public Bereich(Bestand bestand, String name) {

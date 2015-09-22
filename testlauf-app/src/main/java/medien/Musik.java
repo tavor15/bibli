@@ -11,6 +11,10 @@ public class Musik extends Medium{
 	 * private String verlag;
 	 */	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 12L;
 	private ArrayList<String> autoren;
 	private ArrayList<String> interpreten;
 	private int dauerInSek;

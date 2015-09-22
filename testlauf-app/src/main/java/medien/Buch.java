@@ -14,6 +14,10 @@ public class Buch extends Medium{
 	 * private String verlag;
 	 */
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 11L;
 	private ArrayList<String> autoren;
 	private String seiten;
 	private String prequel;

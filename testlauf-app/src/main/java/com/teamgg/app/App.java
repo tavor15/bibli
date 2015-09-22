@@ -1,5 +1,6 @@
 package com.teamgg.app;
 
+import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,9 +19,18 @@ public class App {
 
 		log("Bibli v0.2\nWillkommen im System!\n");
 		
-		Bestand best = new Bestand("Bibli");
-		best.setSuche(new Suchsystem(best));
+		Bestand best = null;
 		
+		//TODO Existenzpruefung der Sicherungen
+		
+		try {
+			best = Bestand.load();
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		/* bei neuem Bestand
 		Bereich testlabor = new Bereich(best,"Testlabor");
 		Regal test = new Regal(testlabor, "Test");
 		
@@ -44,6 +54,7 @@ public class App {
 			e.printStackTrace();
 		}
 		
+		
 		best.add(testlabor);
 		testlabor.add(test);
 		test.add(buch);
@@ -52,7 +63,8 @@ public class App {
 		//log(best.suche(buch.getId()).toString());
 		
 		//log("");
-		
+		 * 
+		 */
 		HashSet<Medium> set;
 		set = best.keysToMedia(best.getSuche().suche("titel:die_welt_UND_フィ"));
 		Iterator<Medium> it = set.iterator();
@@ -61,6 +73,8 @@ public class App {
 			if(it.hasNext())log("--------");
 		}
 		
+		Bestand.safe(best);
+
 		
 	}
 
