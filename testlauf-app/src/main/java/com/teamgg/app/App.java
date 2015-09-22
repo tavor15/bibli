@@ -25,7 +25,7 @@ public class App {
 		Regal test = new Regal(testlabor, "Test");
 		
 		ArrayList<String> autoren = new ArrayList<String>();
-		autoren.add("フィリップ-san");
+		autoren.add("フィ-san");
 		autoren.add("Frank Walter Steinmeyer");
 		autoren.add("Samuel Korona");
 		
@@ -38,7 +38,7 @@ public class App {
 		
 		Buch buch2 = null;
 		try {
-			buch2 = new Buch("Die Welt und フィリップ", "Yen Press", true, autoren2, "1124", 
+			buch2 = new Buch("Die Welt und フィ", "Yen Press", true, autoren2, "1124", 
 					"tanze!", "Die Welt und Wir", "Hartband", "1", new SimpleDateFormat("dd.mm.yyyy").parse("22.01.2010").getTime(), "", "12345678", "Deutsch");
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -54,7 +54,7 @@ public class App {
 		//log("");
 		
 		HashSet<Medium> set;
-		set = best.keysToMedia(best.getSuche().suche("titel:die_welt_UND_フィリップ"));
+		set = best.keysToMedia(best.getSuche().suche("titel:die_welt_UND_フィ"));
 		Iterator<Medium> it = set.iterator();
 		while(it.hasNext()){
 			log(it.next().toString());
