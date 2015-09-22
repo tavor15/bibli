@@ -14,8 +14,8 @@ public class Film extends Medium{
 	private ArrayList<String> autoren;
 	private ArrayList<String> regisseure;
 	private String vorlage; //erweiterung als medium
-	private Medium prequel;
-	private Medium sequel;
+	private String prequel;
+	private String sequel;
 	private int laufzeitInSek;
 	private String medium;
 	private ArrayList<String> sprachen;
@@ -34,7 +34,7 @@ public class Film extends Medium{
 	}
 	
 	public Film(String titel, String verlag, boolean imBesitz, ArrayList<String> autoren, ArrayList<String> regisseure, 
-			String vorlage, Medium prequel, Medium sequel) {
+			String vorlage, String prequel, String sequel) {
 		super(titel, verlag, imBesitz);
 		this.setAutoren(autoren);
 		this.setPrequel(prequel);
@@ -61,19 +61,19 @@ public class Film extends Medium{
 		this.vorlage = vorlage;
 	}
 
-	public Medium getPrequel() {
+	public String getPrequel() {
 		return prequel;
 	}
 
-	public void setPrequel(Medium prequel) {
+	public void setPrequel(String prequel) {
 		this.prequel = prequel;
 	}
 
-	public Medium getSequel() {
+	public String getSequel() {
 		return sequel;
 	}
 
-	public void setSequel(Medium sequel) {
+	public void setSequel(String sequel) {
 		this.sequel = sequel;
 	}
 

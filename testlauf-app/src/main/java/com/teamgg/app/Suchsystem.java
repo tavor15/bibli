@@ -1,5 +1,7 @@
 package com.teamgg.app;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -31,21 +33,38 @@ public class Suchsystem {
 	 * @return true bei Informationsgewinn
 	 */
 	public boolean add(String eigenschaft, String wert, int id){
-		add(eigenschaft, wert);
-		if(!index.get(eigenschaft).get(wert).contains(id))
-			index.get(eigenschaft).get(wert).add(id);
+		add(eigenschaft.toLowerCase(), wert.toLowerCase());
+		if(!index.get(eigenschaft.toLowerCase()).get(wert.toLowerCase()).contains(id))
+			index.get(eigenschaft.toLowerCase()).get(wert.toLowerCase()).add(id);
 		else return false; // kein neuer Eintrag, kein Informationsgewinn
 		return true; // neue Info gespeichert
 	}
 	
-	@Deprecated
+	/**
+	 * Fuegt dem Index ein Datum hinzu, durch Extrahieren des Jahres zu einem String.
+	 * @param eigenschaft
+	 * @param wert
+	 * @param id
+	 * @return
+	 */
+	private boolean addDate(String eigenschaft, long wert, int id){
+		SimpleDateFormat df = new SimpleDateFormat("yyyy");
+		String date = df.format(new Date(wert));
+		add(eigenschaft.toLowerCase(),date);
+		if(!index.get(eigenschaft.toLowerCase()).get(date).contains(id))
+			index.get(eigenschaft.toLowerCase()).get(date).add(id);
+		else return false; // kein neuer Eintrag, kein Informationsgewinn
+		return true; // neue Info gespeichert
+		
+	}
+	
 	/**
 	 * Fuegt der Liste, die Eintraege der "eigenschaft" beherbergt, "wert" als neue leere Liste von IDs hinzu.
 	 * @param eigenschaft
 	 * @param wert
 	 * @return
 	 */
-	public boolean add(String eigenschaft, String wert){	//Nutzen?
+	private boolean add(String eigenschaft, String wert){
 		if(!index.containsKey(eigenschaft))
 			index.put(eigenschaft, new HashMap<String,HashSet<Integer>>());
 		if(!index.get(eigenschaft).containsKey(wert))
@@ -68,13 +87,6 @@ public class Suchsystem {
 		if(m.getClass().isAssignableFrom(Buch.class)){ //-----------------------------------Buch-----------------
 			add("klasse","buch",m.getId());
 			Buch b = (Buch) m;
-			/*
-				private Medium prequel;
-				private Medium sequel;
-				private long ersterscheinung;
-				private String anmerkungen;
-				private String isbn;
-			 */
 			
 			Iterator<String> i = b.getAutoren().iterator();
 			while(i.hasNext()){
@@ -82,19 +94,17 @@ public class Suchsystem {
 			}
 			
 			add("auflage",b.getAuflage(),b.getId());
-			//add("seiten",b.getSeiten(),b.getId());	// ohne Vergleichsoperatoren nicht wirklich sinnvoll (Erweiterung)
+			add("prequel",b.getPrequel(),b.getId());
+			add("sequel",b.getSequel(),b.getId());
 			add("bindung",b.getBindung(),b.getId());
 			add("sprache",b.getSprache(),b.getId());
-			// ALLE Eigenschaften hinzufuegen oder nur gruppenbildende?
+			addDate("jahr",b.getErsterscheinung(),b.getId());
+			add("isbn",b.getIsbn(),b.getId());
+			add("titel",b.getTitel(),b.getId());
+			
 		}else if(m.getClass().isAssignableFrom(Film.class)){ //------------------------------Film--------------------
 			add("klasse","film",m.getId());
 			Film f = (Film) m;
-			/*
-				private Medium prequel;
-				private Medium sequel;
-				private int laufzeitInSek;
-				private String anmerkungen;
-			 */
 			
 			Iterator<String> i = f.getAutoren().iterator();
 			while(i.hasNext()){
@@ -108,6 +118,9 @@ public class Suchsystem {
 			add("vorlage",f.getVorlage(),f.getId());
 			add("medium",f.getMedium(),f.getId());
 			add("land",f.getErscheinungsland(),f.getId());
+			add("prequel",f.getPrequel(),f.getId());
+			add("sequel",f.getSequel(),f.getId());
+			add("titel",f.getTitel(),f.getId());
 			
 			i = f.getSprachen().iterator();
 			while(i.hasNext()){
@@ -118,16 +131,10 @@ public class Suchsystem {
 			while(i.hasNext()){
 				add("untertitel", i.next(), f.getId());
 			}
-			//ALLE Eigenschaften?
+			
 		}else if(m.getClass().isAssignableFrom(Musik.class)){ //-----------------------------Musik----------------------
 			add("klasse","musik",m.getId());
 			Musik u = (Musik) m;
-			/*
-				private int dauerInSek;
-				private int spuren;
-				private long ersterscheinung;
-				private String anmerkungen;
-			 */
 			
 			Iterator<String> i = u.getAutoren().iterator();
 			while(i.hasNext()){
@@ -141,14 +148,17 @@ public class Suchsystem {
 			
 			add("land",u.getErscheinungsland(),u.getId());
 			add("medium",u.getMedium(),u.getId());
-			// auch hier ALLE Eigenschaften??
+			addDate("jahr",u.getErsterscheinung(),u.getId());
+			add("titel",u.getTitel(),u.getId());
 		}
 		return false;
 	}
 	
 	/**
 	 * Exklusive Suche nach Medien anhand eines zu uebergebenden Suchausdrucks 
-	 * der Form "[eigenschaft_1]:[wert_1] [eigenschaft_2]:[wert_2] [...]" (Bsp.: autor:max_mustermann).
+	 * der Form "[eigenschaft_1]:[wert_1] [eigenschaft_2]:[wert_2] [...]" (Bsp.: autor:max_mustermann). 
+	 * Erlaubte Eigenschaften: autor, verlag, titel, klasse (buch/musik/film), auflage, bindung (bei Buch, z.B. Hartband), 
+	 * sprache, sequel, prequel, jahr, untertitel, regisseur, land, medium (z.B. DVD, VHS, CD, ...)
 	 * @param qry
 	 * @return Menge der Ergebnis-Schluessel (hash-Werte der Medien)
 	 */
@@ -168,11 +178,20 @@ public class Suchsystem {
 				term = token[i].split(":");
 			}catch(IndexOutOfBoundsException ex){
 				ex.printStackTrace();
-				System.err.println("Syntaxfehler in der Suchformel! Korrekte Form: eigenschaft:wert");
 			}
 			if(term[0].equals("autor")) erg.addAll(getAutor(term[1]));
 			else if(term[0].equals("verlag")){
 				if(erg.isEmpty()) erg.addAll(getVerlag(term[1]));
+				else{
+					it = erg.iterator();
+					while(it.hasNext()){
+						temp = it.next();
+						if(!erg.contains(temp)) antiErg.add(temp);
+					}
+				}
+			}
+			else if(term[0].equals("titel")){
+				if(erg.isEmpty()) erg.addAll(getTitel(term[1]));
 				else{
 					it = erg.iterator();
 					while(it.hasNext()){
@@ -224,6 +243,26 @@ public class Suchsystem {
 					}
 				}
 			}
+			else if(term[0].equals("sequel")){
+				if(erg.isEmpty()) erg.addAll(getSequel(term[1]));
+				else{
+					it = erg.iterator();
+					while(it.hasNext()){
+						temp = it.next();
+						if(!erg.contains(temp)) antiErg.add(temp);
+					}
+				}
+			}
+			else if(term[0].equals("prequel")){
+				if(erg.isEmpty()) erg.addAll(getPrequel(term[1]));
+				else{
+					it = erg.iterator();
+					while(it.hasNext()){
+						temp = it.next();
+						if(!erg.contains(temp)) antiErg.add(temp);
+					}
+				}
+			}
 			else if(term[0].equals("untertitel")){
 				if(erg.isEmpty()) erg.addAll(getUntertitel(term[1]));
 				else{
@@ -264,6 +303,16 @@ public class Suchsystem {
 					}
 				}
 			}
+			else if(term[0].equals("jahr")){
+				if(erg.isEmpty()) erg.addAll(getJahr(term[1]));
+				else{
+					it = erg.iterator();
+					while(it.hasNext()){
+						temp = it.next();
+						if(!erg.contains(temp)) antiErg.add(temp);
+					}
+				}
+			}
 			else{
 				System.err.println("Eigenschaft " + term[0] + " nicht gefunden!");
 			}
@@ -278,19 +327,35 @@ public class Suchsystem {
 	}
 	
 	private HashSet<Integer> getKlasse(String klasse){
-		return index.get("klasse").get(klasse);
+		return index.get("klasse").get(klasse.toLowerCase());
+	}
+	
+	private HashSet<Integer> getTitel(String titel){
+		return index.get("titel").get(titel.toLowerCase().replace('_', ' '));
+	}
+	
+	private HashSet<Integer> getJahr(String jahr){
+		return index.get("jahr").get(jahr);
+	}
+	
+	private HashSet<Integer> getPrequel(String prequel){
+		return index.get("prequel").get(prequel.toLowerCase().replace('_', ' '));
+	}
+	
+	private HashSet<Integer> getSequel(String sequel){
+		return index.get("sequel").get(sequel.toLowerCase().replace('_', ' '));
 	}
 	
 	private HashSet<Integer> getAutor(String autor){
-		return index.get("autor").get(autor);
+		return index.get("autor").get(autor.toLowerCase().replace('_', ' '));
 	}
 	
 	private HashSet<Integer> getMedium(String medium){
-		return index.get("medium").get(medium);
+		return index.get("medium").get(medium.toLowerCase());
 	}
 	
 	private HashSet<Integer> getVerlag(String verlag){
-		return index.get("verlag").get(verlag);
+		return index.get("verlag").get(verlag.toLowerCase().replace('_', ' '));
 	}
 	
 	private HashSet<Integer> getAuflage(String auflage){
@@ -298,23 +363,23 @@ public class Suchsystem {
 	}
 	
 	private HashSet<Integer> getBindung(String bindung){
-		return index.get("bindung").get(bindung);
+		return index.get("bindung").get(bindung.toLowerCase());
 	}
 	
 	private HashSet<Integer> getSprache(String sprache){
-		return index.get("sprache").get(sprache);
+		return index.get("sprache").get(sprache.toLowerCase());
 	}
 	
 	private HashSet<Integer> getUntertitel(String unter){
-		return index.get("untertitel").get(unter);
+		return index.get("untertitel").get(unter.toLowerCase());
 	}
 	
 	private HashSet<Integer> getRegisseur(String regisseur){
-		return index.get("regisseur").get(regisseur);
+		return index.get("regisseur").get(regisseur.toLowerCase().replace('_', ' '));
 	}
 	
 	private HashSet<Integer> getLand(String land){
-		return index.get("erscheinungsland").get(land);
+		return index.get("erscheinungsland").get(land.toLowerCase().replace('_', ' '));
 	}
 	
 	public static void log(String s){

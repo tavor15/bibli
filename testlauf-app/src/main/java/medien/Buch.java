@@ -16,8 +16,8 @@ public class Buch extends Medium{
 	
 	private ArrayList<String> autoren;
 	private String seiten;
-	private Medium prequel;
-	private Medium sequel;
+	private String prequel;
+	private String sequel;
 	private String bindung;
 	private String auflage;
 	private long ersterscheinung;
@@ -25,19 +25,19 @@ public class Buch extends Medium{
 	private String isbn;
 	private String Sprache;
 	
-	public Buch(String titel, String verlag, boolean imBesitz, ArrayList<String> autoren, String seiten, Medium prequel, Medium sequel,
+	public Buch(String titel, String verlag, boolean imBesitz, ArrayList<String> autoren, String seiten, String prequel, String sequel,
 			    String bindung, String auflage, long ersterscheinung, String anmerkungen, String isbn, String sprache) {
 		super(titel, verlag, imBesitz);
 		this.setAutoren(autoren);
 		this.setPrequel(prequel);
 		this.setSeiten(seiten);
 		this.setSequel(sequel);
-		this.setBindung(bindung.replace(' ', '_').toLowerCase());
+		this.setBindung(bindung);
 		this.setAuflage(auflage);
 		this.setErsterscheinung(ersterscheinung);
 		this.setAnmerkungen(anmerkungen);
 		this.setIsbn(isbn);
-		this.setSprache(sprache.replace(' ', '_').toLowerCase());
+		this.setSprache(sprache);
 	}
 	
 	@Override
@@ -73,19 +73,19 @@ public class Buch extends Medium{
 		this.seiten = seiten;
 	}
 
-	public Medium getPrequel() {
+	public String getPrequel() {
 		return prequel;
 	}
 
-	public void setPrequel(Medium prequel) {
+	public void setPrequel(String prequel) {
 		this.prequel = prequel;
 	}
 
-	public Medium getSequel() {
+	public String getSequel() {
 		return sequel;
 	}
 
-	public void setSequel(Medium sequel) {
+	public void setSequel(String sequel) {
 		this.sequel = sequel;
 	}
 
