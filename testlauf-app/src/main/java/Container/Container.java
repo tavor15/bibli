@@ -14,18 +14,24 @@ public abstract class Container<T> implements Serializable{
 	private String name;
 	private Suchsystem suche;
 	
+	/**
+	 * Prueft auf Existenz des Elementes im Container und fuegt es im negativen Fall hinzu.
+	 * (siehe add() in Klasse HashSet)
+	 * @param element
+	 * @return true bei Hinzufuegung, false sonst
+	 */
 	public boolean add(T element){
-		if(inhalt.contains(element)) return false;
-		inhalt.add(element);
-		return true;
+		return inhalt.add(element);
 	}
 	
+	/**
+	 * Prueft auf Existenz des Elements im Container und loescht es im positiven Fall.
+	 * (siehe remove() in Klasse HashSet)
+	 * @param element
+	 * @return true bei Loeschung, false sonst
+	 */
 	public boolean remove(T element){
-		if(inhalt.contains(element)){
-			inhalt.remove(element);
-			return true;
-		}
-		return false;
+		return inhalt.remove(element);
 	}
 	
 	public boolean addAll(Collection<? extends T> col){

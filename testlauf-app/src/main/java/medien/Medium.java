@@ -14,7 +14,8 @@ public class Medium implements Serializable{
 	 */
 	private static final long serialVersionUID = 10L;
 	private final int id;
-	private String[] titelUndVerlag = new String[2];
+	private String titel;
+	private String verlag;
 	private boolean imBesitz;
 	
 	/**
@@ -53,11 +54,11 @@ public class Medium implements Serializable{
 	}
 
 	public String getTitel() {
-		return this.getTitelUndVerlag()[0];
+		return this.titel;
 	}
 
 	public void setTitel(String titel) {
-		this.getTitelUndVerlag()[0] = titel;
+		this.titel = titel;
 	}
 
 	public int getId() {
@@ -65,19 +66,13 @@ public class Medium implements Serializable{
 	}
 
 	public String getVerlag() {
-		return this.getTitelUndVerlag()[1];
+		return this.verlag;
 	}
 
 	public void setVerlag(String verlag) {
-		 this.getTitelUndVerlag()[1] = verlag;
+		 this.verlag = verlag;
 	}
 
-	private String[] getTitelUndVerlag() {
-		return titelUndVerlag;
-	
-	
-	
-	}
 
 	public boolean isImBesitz() {
 		return imBesitz;

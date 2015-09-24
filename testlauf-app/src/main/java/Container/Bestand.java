@@ -2,6 +2,7 @@ package Container;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -16,6 +17,8 @@ import com.teamgg.app.Suche;
 import medien.Medium;
 
 public class Bestand extends Container<Bereich> implements Suche{
+	
+	private static final String safeFileName = "bibli.safe";
 
 	private static final long serialVersionUID = 23L;
 
@@ -26,7 +29,10 @@ public class Bestand extends Container<Bereich> implements Suche{
 	
 	public static void safe(Bestand s) {
 		try {
-			BufferedOutputStream buffered = new BufferedOutputStream(new FileOutputStream("bibli.safe"));
+			File file = new File(safeFileName);
+			if(!file.exists()) file.createNewFile();
+			FileOutputStream fs = new FileOutputStream(file);
+			BufferedOutputStream buffered = new BufferedOutputStream(fs);
 			ObjectOutputStream out = new ObjectOutputStream(buffered);
 			out.writeObject(s);
 			out.flush();
@@ -38,10 +44,13 @@ public class Bestand extends Container<Bereich> implements Suche{
 		}
 	}
 	
-	public static Bestand load() throws FileNotFoundException{
+	public static Bestand load(){
 		Bestand b = null;
 		try {
-			BufferedInputStream buffered = new BufferedInputStream(new FileInputStream("bibli.safe"));
+			File file = new File(safeFileName);
+			if(!file.exists()) return null;
+			FileInputStream fs = new FileInputStream(file);
+			BufferedInputStream buffered = new BufferedInputStream(fs);
 			ObjectInputStream in = new ObjectInputStream(buffered);
 			b = (Bestand) in.readObject();
 			in.close();

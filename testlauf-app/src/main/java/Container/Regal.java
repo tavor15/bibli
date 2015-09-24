@@ -23,12 +23,11 @@ public class Regal extends Container<Medium> implements Suche{
 	@Override
 	/**
 	 * Fuegt dem Regal ein neues Medium hinzu und loest die Funktion add(Medium) im Suchsystem aus, 
-	 * wodurch die ID des Mediums in die entsprechenden Eigenschafts- und Wert-Listen eingetragen weird.
+	 * wodurch die ID des Mediums in die entsprechenden Eigenschafts- und Wert-Listen eingetragen wird.
 	 */
 	public boolean add(Medium m){
-		super.add(m);
-		getSuche().add(m);
-		return false;
+		if(super.add(m)) return getSuche().add(m);
+		else return false;
 	}
 	
 	public Medium suche(int id) {

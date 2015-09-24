@@ -126,14 +126,16 @@ public class Suchsystem implements Serializable{
 	 * dem Index hinzu bzw. erstellt neue Listen fuer neue Eigenschaften und Werte und versieht diese mit der ID
 	 * des Mediums als ersten Eintrag.
 	 * @param m
-	 * @return
+	 * @return true bei Neueintrag, false bei Editierung (auSSer bei Verlag oder Titel)
 	 */
 	public boolean add(Medium m){
+		
+		boolean neu = false;
 		
 		add("verlag",m.getVerlag(),m.getId());
 		
 		if(m.getClass().isAssignableFrom(Buch.class)){ //-----------------------------------Buch-----------------
-			add("klasse","buch",m.getId());
+			neu = add("klasse","buch",m.getId());
 			Buch b = (Buch) m;
 			
 			Iterator<String> i = b.getAutoren().iterator();
@@ -151,7 +153,7 @@ public class Suchsystem implements Serializable{
 			add("titel",b.getTitel(),b.getId());
 			
 		}else if(m.getClass().isAssignableFrom(Film.class)){ //------------------------------Film--------------------
-			add("klasse","film",m.getId());
+			neu = add("klasse","film",m.getId());
 			Film f = (Film) m;
 			
 			Iterator<String> i = f.getAutoren().iterator();
@@ -181,7 +183,7 @@ public class Suchsystem implements Serializable{
 			}
 			
 		}else if(m.getClass().isAssignableFrom(Musik.class)){ //-----------------------------Musik----------------------
-			add("klasse","musik",m.getId());
+			neu = add("klasse","musik",m.getId());
 			Musik u = (Musik) m;
 			
 			Iterator<String> i = u.getAutoren().iterator();
@@ -199,7 +201,7 @@ public class Suchsystem implements Serializable{
 			addDate("jahr",u.getErsterscheinung(),u.getId());
 			add("titel",u.getTitel(),u.getId());
 		}
-		return false;
+		return neu;
 	}
 	
 	/**
