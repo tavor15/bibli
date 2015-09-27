@@ -42,6 +42,9 @@ public class Medium implements Serializable{
 		return this.getTitel().hashCode() * 13 + this.getVerlag().hashCode() * 17;
 	}
 	
+	/**
+	 * Formschoene Ausgabe der Eigenschaften des Mediums.
+	 */
 	@Override
 	public String toString(){
 		String ant;

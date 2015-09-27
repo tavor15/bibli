@@ -11,6 +11,10 @@ public class Regal extends Container<Medium> implements Suche{
 	
 
 	private static final long serialVersionUID = 21L;
+	
+	/**
+	 * Pfad des Regals in der Bibliotheks-Struktur im UNIX-Stil (bestand/bereich/regal)
+	 */
 	private String pfad;
 
 	public Regal(Bereich bereich, String name) {
@@ -30,6 +34,10 @@ public class Regal extends Container<Medium> implements Suche{
 		else return false;
 	}
 	
+	/**
+	 * Suche eines Mediums anhand dessen ID (also des hash-Wertes)
+	 * @return gefundenes Medium oder null
+	 */
 	public Medium suche(int id) {
 		Iterator<Medium> i = getInhalt().iterator();
 		Medium temp;
@@ -40,6 +48,10 @@ public class Regal extends Container<Medium> implements Suche{
 		return null;
 	}
 	
+	/**
+	 * Umwandlung einer Menge von IDs in Medien
+	 * @return Menge der gefunden Medien
+	 */
 	public HashSet<Medium> keysToMedia(HashSet<Integer> set) {
 		HashSet<Medium> erg = new HashSet<Medium>();
 		Iterator<Integer> it = set.iterator();

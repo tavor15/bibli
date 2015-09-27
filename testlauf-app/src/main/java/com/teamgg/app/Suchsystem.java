@@ -27,10 +27,17 @@ public class Suchsystem implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 30L;
+	
+	/**
+	 * Diese Baumstruktur speichert die Eigenschaften aller Medien, deren Werte und die
+	 * IDs derer Medien, die [eigenschaft] mit [wert] besitzen.
+	 * 
+	 * Ebenen: Eigenschaft - Wert - Liste der IDs
+	 * Beispiel: 
+	 * verlag -> cornelsen -> 12398, 91320598, 43285120, -23845, 92356, ...
+	 * autor -> hermann_hesse -> 1284125, 1248521, 98903215, ...
+	 */
 	private HashMap<String,HashMap<String,HashSet<Integer>>> index;
-	// Eigenschaft - Wert - Liste der betreffenden Medien (als Hash-Werte)
-	
-	
 	
 	public Suchsystem(Bestand b){
 		index = new HashMap<String,HashMap<String,HashSet<Integer>>>();
@@ -134,7 +141,9 @@ public class Suchsystem implements Serializable{
 		
 		add("verlag",m.getVerlag(),m.getId());
 		
+		//pruefe Medium m auf Klasse Buch
 		if(m.getClass().isAssignableFrom(Buch.class)){ //-----------------------------------Buch-----------------
+			
 			neu = add("klasse","buch",m.getId());
 			Buch b = (Buch) m;
 			
@@ -152,7 +161,9 @@ public class Suchsystem implements Serializable{
 			add("isbn",b.getIsbn(),b.getId());
 			add("titel",b.getTitel(),b.getId());
 			
+		//pruefe Medium m auf Klasse Film
 		}else if(m.getClass().isAssignableFrom(Film.class)){ //------------------------------Film--------------------
+			
 			neu = add("klasse","film",m.getId());
 			Film f = (Film) m;
 			
@@ -182,7 +193,9 @@ public class Suchsystem implements Serializable{
 				add("untertitel", i.next(), f.getId());
 			}
 			
+		//pruefe Medium m auf Klasse Musik
 		}else if(m.getClass().isAssignableFrom(Musik.class)){ //-----------------------------Musik----------------------
+			
 			neu = add("klasse","musik",m.getId());
 			Musik u = (Musik) m;
 			
@@ -217,30 +230,41 @@ public class Suchsystem implements Serializable{
 		HashSet<Integer> erg = new HashSet<Integer>();
 		HashSet<Integer> antiErg = new HashSet<Integer>();
 		
-		qry = qry.toLowerCase();
+		qry = qry.toLowerCase();	//Suchstring zu Kleinbuchstaben
 		
-		String[] token = qry.split(" ");
-		String[] term = new String[2];
+		String[] token = qry.split(" ");	//bilde Menge von Substrings anhand des Leerzeichens --> [autor:testautor][verlag:testverlag][...]
+		String[] term = new String[2];		//Platzhalter fuer Eigenschaft + Wert, also [autor][testautor]
 		Iterator<Integer> it;
 		int temp;
 		for(int i=0;i<token.length;i++){
+			
 			try{
-				term = token[i].split(":");
+				term = token[i].split(":");	//teile Substrings der Suchanfrage an Doppelpunkt "autor:testautor" --> ["autor"]["testautor"]
 			}catch(IndexOutOfBoundsException ex){
 				ex.printStackTrace();
 			}
-			if(term[0].equals("autor")) erg.addAll(getAutor(term[1]));
-			else if(term[0].equals("verlag")){
-				if(erg.isEmpty()) erg.addAll(getVerlag(term[1]));
+			
+			if(term[0].equals("autor")){	// gesuchte Eigenschaft ist "autor"?
+				if(erg.isEmpty()) erg.addAll(getAutor(term[1]));	// Ergebnismenge leer? fuege ihr alle IDs der Werke des Autors hinzu
 				else{
 					it = erg.iterator();
 					while(it.hasNext()){
 						temp = it.next();
-						if(!erg.contains(temp)) antiErg.add(temp);
+						if(!erg.contains(temp)) antiErg.add(temp);	// Medium ist nicht bereits in Ergbnismenge? Fuege es der Abzugsmenge hinzu
 					}
 				}
 			}
-			else if(term[0].equals("titel")){
+			else if(term[0].equals("verlag")){	// gesuchte Eigenschaft ist Verlag?
+				if(erg.isEmpty()) erg.addAll(getVerlag(term[1]));	// Ergebnismenge leer? fuege ihr alle IDs der Medien des Verlags hinzu
+				else{
+					it = erg.iterator();
+					while(it.hasNext()){
+						temp = it.next();
+						if(!erg.contains(temp)) antiErg.add(temp); // Nicht bereits in Ergebnismenge? Eintrag in Abzugsmenge!
+					}
+				}
+			}
+			else if(term[0].equals("titel")){	// vgl. oben
 				if(erg.isEmpty()) erg.addAll(getTitel(term[1]));
 				else{
 					it = erg.iterator();
@@ -250,7 +274,7 @@ public class Suchsystem implements Serializable{
 					}
 				}
 			}
-			else if(term[0].equals("klasse")){
+			else if(term[0].equals("klasse")){	// vgl. oben
 				
 				if(erg.isEmpty()) 
 					if(getKlasse(term[1]) != null) erg.addAll(getKlasse(term[1]));
@@ -368,11 +392,17 @@ public class Suchsystem implements Serializable{
 			}
 			
 		}
+		
+		// Ergbnismenge ist jetzt das Ergebnis einer ODER-Suche
+		
 		it = antiErg.iterator();
 		while(it.hasNext()){
 			temp = it.next();
-			if(erg.contains(temp)) erg.remove(temp);
+			if(erg.contains(temp)) erg.remove(temp);	// entferne alle Eintraege aus Ergebnismenge, die in Abzugsmenge sind
 		}
+		
+		// Ergbnismenge ist jetzt das Ergebnis einer UND-Suche
+		
 		return erg;
 	}
 	

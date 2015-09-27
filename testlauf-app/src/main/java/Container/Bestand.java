@@ -18,6 +18,9 @@ import medien.Medium;
 
 public class Bestand extends Container<Bereich> implements Suche{
 	
+	/**
+	 * Name der Datei zum Speichern der Bibliothek
+	 */
 	private static final String safeFileName = "bibli.safe";
 
 	private static final long serialVersionUID = 23L;
@@ -27,6 +30,11 @@ public class Bestand extends Container<Bereich> implements Suche{
 		super.setInhalt(new HashSet<Bereich>());
 	}
 	
+	/**
+	 * Speichert den Bestand als Objekt ab. Dies schlieSSt das Suchsystem mit seinen Listen
+	 * und alle Container mit ein.
+	 * @param s
+	 */
 	public static void safe(Bestand s) {
 		try {
 			File file = new File(safeFileName);
@@ -44,6 +52,10 @@ public class Bestand extends Container<Bereich> implements Suche{
 		}
 	}
 	
+	/**
+	 * Laedt Bestand aus der abgespeicherten Datei direkt als Objekt
+	 * @return
+	 */
 	public static Bestand load(){
 		Bestand b = null;
 		try {
@@ -63,6 +75,10 @@ public class Bestand extends Container<Bereich> implements Suche{
 		return b;
 	}
 
+	/**
+	 * Sucht ein Medium anhand dessen ID. Es werden alle Bereiche und Regale, also der gesamte
+	 * Medien-Bestand untersucht.
+	 */
 	public Medium suche(int id) {
 		Iterator<Bereich> i = getInhalt().iterator();
 		Iterator<Regal> j;
@@ -81,6 +97,10 @@ public class Bestand extends Container<Bereich> implements Suche{
 		return null;
 	}
 
+	/**
+	 * Suchfunktion, die eine Menge von IDs in die korrespondierende Menge der Medien wandelt.
+	 * Ruft suche() auf.
+	 */
 	public HashSet<Medium> keysToMedia(HashSet<Integer> set) {
 		HashSet<Medium> erg = new HashSet<Medium>();
 		Iterator<Integer> it = set.iterator();

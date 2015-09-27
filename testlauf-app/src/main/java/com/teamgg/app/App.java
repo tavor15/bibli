@@ -20,15 +20,13 @@ public class App {
 		log("Bibli v0.2\nWillkommen im System!\n");
 		
 		Bestand best = null;
+				
+		best = Bestand.load();	// lade gespeicherten Bestand
 		
-		//TODO Existenzpruefung der Sicherungen
-		
-		best = Bestand.load();
-		if(best == null){
+		if(best == null){	// Gespeicherter Bestand nicht gefunden
 			best = new Bestand("bibli");
 			best.setSuche(new Suchsystem(best));
 		
-			// bei neuem Bestand
 			Bereich testlabor = new Bereich(best,"Testlabor");
 			Regal test = new Regal(testlabor, "Test");
 			
@@ -62,6 +60,9 @@ public class App {
 			
 			//log("");
 		}
+		
+		// Testsuche
+		
 		HashSet<Medium> set;
 		set = best.keysToMedia(best.getSuche().suche("titel:die_welt_UND_フィ"));
 		Iterator<Medium> it = set.iterator();
@@ -70,8 +71,9 @@ public class App {
 			if(it.hasNext())log("--------");
 		}
 		
+		// Bestand abspeichern
 		Bestand.safe(best);
-		
+		return;		
 	}
 
 	public static void log(String s) {

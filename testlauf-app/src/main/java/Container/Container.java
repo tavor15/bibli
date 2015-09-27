@@ -10,8 +10,20 @@ import com.teamgg.app.Suchsystem;
 public abstract class Container<T> implements Serializable{
 
 	private static final long serialVersionUID = 20L;
+	
+	/**
+	 * Eigentlicher Container, sozusagen der body
+	 */
 	private HashSet<T> inhalt;
+	
+	/**
+	 * Titel der Einheit
+	 */
 	private String name;
+	
+	/**
+	 * Instanz des Suchsystems, das mit der Listung von Eigenschaften aus Medien betraut wird
+	 */
 	private Suchsystem suche;
 	
 	/**
@@ -34,11 +46,19 @@ public abstract class Container<T> implements Serializable{
 		return inhalt.remove(element);
 	}
 	
+	/**
+	 * Siehe addAll() in HashMap
+	 * @param col
+	 * @return 
+	 */
 	public boolean addAll(Collection<? extends T> col){
 		return inhalt.addAll(col);
 	}
 	
 	@Override
+	/**
+	 * Formschoene Ausgabe des Containers mit Titel und Inhalten
+	 */
 	public String toString(){
 		String erg = this.getClass().getName() + ": " + name + "\n";
 		Iterator<T> i = inhalt.iterator();
